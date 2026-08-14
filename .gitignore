@@ -1,0 +1,13 @@
+
+target/
+dbt_packages/
+logs/
+.env
+
+.venv
+*.db
+*.duckdb
+*.db-journal
+*.parquet
+*.csv
+*.json
