@@ -20,13 +20,9 @@ WHERE entry.resource.resourceType = 'Organization'
 organization_values AS (
 SELECT
     organization_id,
-    organization_active,
     organization_name,
-    identifier_value ->> 'value' AS organization_source_value,
     type_value -> 'coding' -> 0 ->> 'code' AS organization_type_code,
     type_value -> 'coding' -> 0 ->> 'display' AS organization_type_display,
-    telecom_value ->> 'system' AS telecom_system,
-    telecom_value ->> 'value' AS telecom_value,
     address_value -> 'line' ->> 0 AS address_line,
     address_value ->> 'city' AS city,
     address_value ->> 'state' AS state,
@@ -37,13 +33,9 @@ FROM care_site_info
 
 SELECT
     organization_id,
-    organization_active,
     organization_name,
-    organization_source_value,
     organization_type_code,
     organization_type_display,
-    telecom_system,
-    telecom_value,
     address_line,
     city,
     state,
