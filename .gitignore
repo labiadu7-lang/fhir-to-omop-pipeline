@@ -3,7 +3,7 @@ target/
 dbt_packages/
 logs/
 .env
-
+.idea/
 .venv
 *.db
 *.duckdb

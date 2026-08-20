@@ -21,6 +21,7 @@ SELECT
     provider_active,
     gender_source_value,
     identifier_value ->> 'value' AS provider_source_value,
+    identifier_value ->> 'value' AS npi,
     name_value ->> 'family' AS provider_family_name,
     name_value -> 'given' ->> 0 AS provider_given_name,
     name_value -> 'prefix' ->> 0 AS provider_prefix
@@ -32,6 +33,7 @@ SELECT DISTINCT
     provider_active,
     gender_source_value,
     provider_source_value,
+    npi,
     provider_family_name,
     provider_given_name,
     provider_prefix
