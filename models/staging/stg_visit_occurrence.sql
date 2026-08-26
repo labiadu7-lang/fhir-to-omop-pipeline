@@ -28,9 +28,9 @@ FROM visit_info
 )
 SELECT
     v.encounter_id,
-    CAST(v.patient_id AS uuid) AS patient_id,
-    CAST(v.provider_id AS uuid) AS provider_id,
-    CAST(v.care_site_id AS uuid) AS care_site_id,
+    v.patient_id,
+    v.provider_id,
+    v.care_site_id,
     v.encounter_start_datetime,
     v.encounter_end_datetime,
     v.visit_source_value,
