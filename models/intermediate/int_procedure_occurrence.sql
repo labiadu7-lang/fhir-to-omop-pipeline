@@ -1,0 +1,20 @@
+SELECT
+    ROW_NUMBER() OVER (ORDER BY procedure_id) AS procedure_occurrence_id,
+    patient_id,
+    encounter_id,
+    CAST(NULL AS INTEGER) AS person_id,
+    CAST(0 AS INTEGER) AS procedure_concept_id,
+    CAST(procedure_start_date AS DATE) AS procedure_date,
+    CAST(procedure_start_date AS TIMESTAMP) AS procedure_datetime,
+    CAST(procedure_end_date AS DATE) AS procedure_end_date,
+    CAST(procedure_end_date AS TIMESTAMP) AS procedure_end_datetime,
+    CAST(0 AS INTEGER) AS procedure_type_concept_id,
+    CAST(0 AS INTEGER) AS modifier_concept_id,
+    CAST(1 AS INTEGER) AS quantity,
+    CAST(NULL AS INTEGER) AS provider_id,
+    CAST(NULL AS INTEGER) AS visit_occurrence_id,
+    CAST(0 AS INTEGER) AS visit_detail_id,
+    CAST(procedure_code AS VARCHAR(50)) AS procedure_source_value,
+    CAST(0 AS INTEGER) AS procedure_source_concept_id,
+    CAST(NULL AS VARCHAR(50)) AS modifier_source_value
+FROM {{ ref('stg_procedure_occurrence') }}

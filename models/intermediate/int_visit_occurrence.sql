@@ -1,0 +1,21 @@
+SELECT
+    ROW_NUMBER() OVER (ORDER BY encounter_id) AS visit_occurrence_id,
+    patient_id,
+    encounter_id,
+    CAST(NULL AS INTEGER) AS person_id,
+    CAST(0 AS INTEGER) AS visit_concept_id,
+    CAST(encounter_start_datetime AS DATE) AS visit_start_date,
+    encounter_start_datetime AS visit_start_datetime,
+    CAST(encounter_end_datetime AS DATE) AS visit_end_date,
+    encounter_end_datetime AS visit_end_datetime,
+    CAST(0 AS INTEGER) AS visit_type_concept_id,
+    provider_id,
+    care_site_id,
+    CAST(visit_source_value AS VARCHAR(50)) AS visit_source_value,
+    CAST(0 AS INTEGER) AS visit_source_concept_id,
+    CAST(0 AS INTEGER) AS admitted_from_concept_id,
+    CAST(NULL AS VARCHAR(50)) AS admitted_from_source_value,
+    CAST(0 AS INTEGER) AS discharged_to_concept_id,
+    CAST(NULL AS VARCHAR(50)) AS discharged_to_source_value,
+    CAST(0 AS INTEGER) AS preceding_visit_occurrence_id
+FROM {{ ref('stg_visit_occurrence') }}
