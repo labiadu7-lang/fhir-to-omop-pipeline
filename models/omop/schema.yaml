@@ -1,0 +1,232 @@
+version: 2
+
+models:
+  - name: care_site
+    columns:
+      - name: care_site_id
+        tests:
+          - unique
+          - not_null
+
+  - name: condition_occurrence
+    columns:
+      - name: condition_occurrence_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+      - name: provider_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('provider')
+              field: provider_id
+      - name: visit_occurrence_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('visit_occurrence')
+              field: visit_occurrence_id
+
+  - name: death
+    columns:
+      - name: person_id
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+      - name: death_date
+        tests:
+          - not_null
+
+  - name: device_exposure
+    columns:
+      - name: device_exposure_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+
+  - name: drug_exposure
+    columns:
+      - name: drug_exposure_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+      - name: provider_id
+        tests:
+          - relationships:
+              to: ref('provider')
+              field: provider_id
+      - name: visit_occurrence_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('visit_occurrence')
+              field: visit_occurrence_id
+
+  - name: location
+    columns:
+      - name: location_id
+        tests:
+          - unique
+          - not_null
+
+  - name: measurement
+    columns:
+      - name: measurement_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+      - name: visit_occurrence_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('visit_occurrence')
+              field: visit_occurrence_id
+      - name: provider_id
+        tests:
+          - relationships:
+              to: ref('provider')
+              field: provider_id
+
+  - name: observation
+    columns:
+      - name: observation_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+      - name: visit_occurrence_id
+        tests:
+          - relationships:
+              to: ref('visit_occurrence')
+              field: visit_occurrence_id
+      - name: provider_id
+        tests:
+          - relationships:
+              to: ref('provider')
+              field: provider_id
+
+  - name: observation_period
+    columns:
+      - name: observation_period_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+
+  - name: person
+    columns:
+      - name: person_id
+        tests:
+          - unique
+          - not_null
+      - name: location_id
+        tests:
+          - relationships:
+              to: ref('location')
+              field: location_id
+      - name: provider_id
+        tests:
+          - relationships:
+              to: ref('provider')
+              field: provider_id
+      - name: care_site_id
+        tests:
+          - relationships:
+              to: ref('care_site')
+              field: care_site_id
+
+  - name: procedure_occurrence
+    columns:
+      - name: procedure_occurrence_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+      - name: visit_occurrence_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('visit_occurrence')
+              field: visit_occurrence_id
+      - name: provider_id
+        tests:
+          - relationships:
+              to: ref('provider')
+              field: provider_id
+
+  - name: provider
+    columns:
+      - name: provider_id
+        tests:
+          - unique
+          - not_null
+      - name: care_site_id
+        tests:
+          - relationships:
+              to: ref('care_site')
+              field: care_site_id
+
+  - name: visit_occurrence
+    columns:
+      - name: visit_occurrence_id
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('person')
+              field: person_id
+      - name: provider_id
+        tests:
+          - relationships:
+              to: ref('provider')
+              field: provider_id
+      - name: care_site_id
+        tests:
+          - relationships:
+              to: ref('care_site')
+              field: care_site_id
