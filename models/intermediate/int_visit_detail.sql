@@ -1,0 +1,21 @@
+SELECT
+    CAST(NULL AS BIGINT) AS visit_detail_id,
+    CAST(NULL AS BIGINT) AS person_id,
+    CAST(NULL AS INTEGER) AS visit_detail_concept_id,
+    CAST(NULL AS DATE) AS visit_detail_start_date,
+    CAST(NULL AS TIMESTAMP) AS visit_detail_start_datetime,
+    CAST(NULL AS DATE) AS visit_detail_end_date,
+    CAST(NULL AS TIMESTAMP) AS visit_detail_end_datetime,
+    CAST(NULL AS INTEGER) AS visit_detail_type_concept_id,
+    CAST(NULL AS BIGINT) AS provider_id,
+    CAST(NULL AS BIGINT) AS care_site_id,
+    CAST(NULL AS VARCHAR(50)) AS visit_detail_source_value,
+    CAST(NULL AS INTEGER) AS visit_detail_source_concept_id,
+    CAST(NULL AS INTEGER) AS admitted_from_concept_id,
+    CAST(NULL AS VARCHAR(50)) AS admitted_from_source_value,
+    CAST(NULL AS VARCHAR(50)) AS discharged_to_source_value,
+    CAST(NULL AS INTEGER) AS discharged_to_concept_id,
+    CAST(NULL AS BIGINT) AS preceding_visit_detail_id,
+    CAST(NULL AS BIGINT) AS parent_visit_detail_id,
+    CAST(NULL AS BIGINT) AS visit_occurrence_id
+WHERE 1 = 0

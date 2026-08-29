@@ -17,5 +17,5 @@ SELECT
     CAST(NULL AS VARCHAR(50)) AS admitted_from_source_value,
     CAST(0 AS INTEGER) AS discharged_to_concept_id,
     CAST(NULL AS VARCHAR(50)) AS discharged_to_source_value,
-    CAST(0 AS INTEGER) AS preceding_visit_occurrence_id
+    CAST(NULL AS INTEGER) AS preceding_visit_occurrence_id
 FROM {{ ref('stg_visit_occurrence') }}

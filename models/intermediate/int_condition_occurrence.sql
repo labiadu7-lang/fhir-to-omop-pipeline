@@ -21,7 +21,7 @@ SELECT
     CAST(NULL AS VARCHAR(20)) AS stop_reason,
     CAST(NULL AS INTEGER) AS provider_id,
     CAST(NULL AS INTEGER) AS visit_occurrence_id,
-    CAST(0 AS INTEGER) AS visit_detail_id,
+    CAST(NULL AS INTEGER) AS visit_detail_id,
 
 
     CAST(condition_code AS VARCHAR(50)) AS condition_source_value,

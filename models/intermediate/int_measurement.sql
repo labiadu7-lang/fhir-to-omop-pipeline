@@ -7,6 +7,7 @@ SELECT
     CAST(0 AS INTEGER) AS measurement_concept_id,
     CAST(measurement_datetime AS DATE) AS measurement_date,
     measurement_datetime AS measurement_datetime,
+    CAST(issued_datetime AS TIME) AS measurement_time,
     CAST(0 AS INTEGER) AS measurement_type_concept_id,
     CAST(0 AS INTEGER) AS operator_concept_id,
 

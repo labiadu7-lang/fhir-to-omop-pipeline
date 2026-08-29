@@ -10,7 +10,7 @@ SELECT
     CAST(city AS VARCHAR(50)) AS city,
     CAST(state AS VARCHAR(2)) AS state,
     CAST(zip AS VARCHAR(9)) AS zip,
-    CAST(NULL AS VARCHAR(20)) AS country,
+    CAST(NULL AS VARCHAR(20)) AS county,
 
     CAST(NULL AS VARCHAR(50)) AS location_source_value,
     CAST(0 AS INTEGER) AS country_concept_id,
