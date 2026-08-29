@@ -1,14 +1,14 @@
 version: 2
 
 models:
-  - name: care_site
+  - name: CARE_SITE
     columns:
       - name: care_site_id
         tests:
           - unique
           - not_null
 
-  - name: condition_occurrence
+  - name: CONDITION_OCCURRENCE
     columns:
       - name: condition_occurrence_id
         tests:
@@ -18,35 +18,42 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
       - name: provider_id
         tests:
           - not_null
           - relationships:
-              to: ref('provider')
+              to: ref('PROVIDER')
               field: provider_id
       - name: visit_occurrence_id
         tests:
           - not_null
           - relationships:
-              to: ref('visit_occurrence')
+              to: ref('VISIT_OCCURRENCE')
               field: visit_occurrence_id
 
-  - name: death
+      - name: visit_detail_id
+        tests:
+          - relationships:
+              to: ref('VISIT_DETAIL')
+              field: visit_detail_id
+
+
+  - name: DEATH
     columns:
       - name: person_id
         tests:
           - unique
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
       - name: death_date
         tests:
           - not_null
 
-  - name: device_exposure
+  - name: DEVICE_EXPOSURE
     columns:
       - name: device_exposure_id
         tests:
@@ -56,10 +63,20 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
+      - name: visit_occurrence_id
+        tests:
+          - relationships:
+              to: ref('VISIT_OCCURRENCE')
+              field: visit_occurrence_id
+      - name: visit_detail_id
+        tests:
+          - relationships:
+              to: ref('VISIT_DETAIL')
+              field: visit_detail_id
 
-  - name: drug_exposure
+  - name: DRUG_EXPOSURE
     columns:
       - name: drug_exposure_id
         tests:
@@ -69,28 +86,33 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
       - name: provider_id
         tests:
           - relationships:
-              to: ref('provider')
+              to: ref('PROVIDER')
               field: provider_id
       - name: visit_occurrence_id
         tests:
           - not_null
           - relationships:
-              to: ref('visit_occurrence')
+              to: ref('VISIT_OCCURRENCE')
               field: visit_occurrence_id
+      - name: visit_detail_id
+        tests:
+          - relationships:
+              to: ref('VISIT_DETAIL')
+              field: visit_detail_id
 
-  - name: location
+  - name: LOCATION
     columns:
       - name: location_id
         tests:
           - unique
           - not_null
 
-  - name: measurement
+  - name: MEASUREMENT
     columns:
       - name: measurement_id
         tests:
@@ -100,21 +122,26 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
       - name: visit_occurrence_id
         tests:
           - not_null
           - relationships:
-              to: ref('visit_occurrence')
+              to: ref('VISIT_OCCURRENCE')
               field: visit_occurrence_id
       - name: provider_id
         tests:
           - relationships:
               to: ref('provider')
               field: provider_id
+      - name: visit_detail_id
+        tests:
+          - relationships:
+              to: ref('VISIT_DETAIL')
+              field: visit_detail_id
 
-  - name: observation
+  - name: OBSERVATION
     columns:
       - name: observation_id
         tests:
@@ -124,20 +151,25 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
       - name: visit_occurrence_id
         tests:
           - relationships:
-              to: ref('visit_occurrence')
+              to: ref('VISIT_OCCURRENCE')
               field: visit_occurrence_id
       - name: provider_id
         tests:
           - relationships:
-              to: ref('provider')
+              to: ref('PROVIDER')
               field: provider_id
+      - name: visit_detail_id
+        tests:
+          - relationships:
+              to: ref('VISIT_DETAIL')
+              field: visit_detail_id
 
-  - name: observation_period
+  - name: OBSERVATION_PERIOD
     columns:
       - name: observation_period_id
         tests:
@@ -147,10 +179,10 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
 
-  - name: person
+  - name: PERSON
     columns:
       - name: person_id
         tests:
@@ -159,20 +191,20 @@ models:
       - name: location_id
         tests:
           - relationships:
-              to: ref('location')
+              to: ref('LOCATION')
               field: location_id
       - name: provider_id
         tests:
           - relationships:
-              to: ref('provider')
+              to: ref('PROVIDER')
               field: provider_id
       - name: care_site_id
         tests:
           - relationships:
-              to: ref('care_site')
+              to: ref('CARE_SITE')
               field: care_site_id
 
-  - name: procedure_occurrence
+  - name: PROCEDURE_OCCURRENCE
     columns:
       - name: procedure_occurrence_id
         tests:
@@ -182,21 +214,26 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
       - name: visit_occurrence_id
         tests:
           - not_null
           - relationships:
-              to: ref('visit_occurrence')
+              to: ref('VISIT_OCCURRENCE')
               field: visit_occurrence_id
       - name: provider_id
         tests:
           - relationships:
-              to: ref('provider')
+              to: ref('PROVIDER')
               field: provider_id
+      - name: visit_detail_id
+        tests:
+          - relationships:
+              to: ref('VISIT_DETAIL')
+              field: visit_detail_id
 
-  - name: provider
+  - name: PROVIDER
     columns:
       - name: provider_id
         tests:
@@ -205,10 +242,10 @@ models:
       - name: care_site_id
         tests:
           - relationships:
-              to: ref('care_site')
+              to: ref('CARE_SITE')
               field: care_site_id
 
-  - name: visit_occurrence
+  - name: VISIT_OCCURRENCE
     columns:
       - name: visit_occurrence_id
         tests:
@@ -218,15 +255,15 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('person')
+              to: ref('PERSON')
               field: person_id
       - name: provider_id
         tests:
           - relationships:
-              to: ref('provider')
+              to: ref('PROVIDER')
               field: provider_id
       - name: care_site_id
         tests:
           - relationships:
-              to: ref('care_site')
+              to: ref('CARE_SITE')
               field: care_site_id
