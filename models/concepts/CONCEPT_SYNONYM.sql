@@ -1,0 +1,1 @@
+SELECT * FROM read_csv_auto('C:/Users/labia/Desktop/concepts/CONCEPT_SYNONYM.csv', delim='\t')
