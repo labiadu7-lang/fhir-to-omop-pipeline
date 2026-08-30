@@ -2,6 +2,6 @@ version: 2
 
 sources:
   - name: fhir
-    schema: raw
+    schema: parquet_raw
     tables:
       - name: fhir_bundles
