@@ -1,25 +1,30 @@
 WITH unnested_entries AS (
     SELECT
-        UNNEST(entry) AS entry
-    FROM {{ source('fhir', 'fhir_bundles')}}
+        UNNEST(
+            CAST(
+                json_extract(json_content, '$.entry')
+                AS JSON[]
+            )
+        ) AS entry
+    FROM {{ source('fhir', 'fhir_bundles') }}
 ),
 
 care_site_info AS (
-SELECT
-    entry.resource.id AS organization_id,
-    entry.resource.name AS organization_name,
-    UNNEST(CAST(entry.resource.type AS JSON[])) AS type_value
-FROM unnested_entries
-WHERE entry.resource.resourceType = 'Organization'
+    SELECT
+        REPLACE(CAST(entry.resource.id AS VARCHAR), '"', '') AS organization_id,
+        CAST(entry.resource.name AS VARCHAR) AS organization_name,
+        UNNEST(CAST(entry.resource.type AS JSON[])) AS type_value
+    FROM unnested_entries
+    WHERE CAST(entry.resource.resourceType AS VARCHAR) = '"Organization"'
 ),
 
 organization_values AS (
-SELECT DISTINCT
-    organization_id,
-    organization_name,
-    type_value -> 'coding' -> 0 ->> 'code' AS organization_type_code,
-    type_value -> 'coding' -> 0 ->> 'display' AS organization_type_display
-FROM care_site_info
+    SELECT DISTINCT
+        organization_id,
+        organization_name,
+        CAST(type_value -> 'coding' -> 0 ->> 'code' AS VARCHAR) AS organization_type_code,
+        CAST(type_value -> 'coding' -> 0 ->> 'display' AS VARCHAR) AS organization_type_display
+    FROM care_site_info
 )
 
 SELECT

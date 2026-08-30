@@ -1,45 +1,44 @@
 WITH unnested_entries AS (
     SELECT
-        UNNEST(entry) AS entry
+        UNNEST(
+            CAST(
+                json_extract(json_content, '$.entry')
+                AS JSON[]
+            )
+        ) AS entry
     FROM {{ source('fhir', 'fhir_bundles') }}
 ),
 
 medication_requests AS (
     SELECT
-        entry.resource.id AS medication_request_id,
-        REPLACE(entry.resource.subject.reference, 'urn:uuid:', '') AS patient_id,
-        REPLACE(entry.resource.encounter.reference, 'urn:uuid:', '') AS encounter_id,
-        REPLACE(entry.resource.requester.reference, 'urn:uuid:', '') AS provider_id,
-
-        entry.resource.status AS medication_request_status,
-        entry.resource.intent AS medication_request_intent,
-        entry.resource.authoredOn AS authored_datetime,
-        entry.resource.medicationCodeableConcept.text AS medication_text,
-
+        CAST(entry.resource.id AS VARCHAR) AS medication_request_id,
+        REPLACE(CAST(entry.resource.subject.reference AS VARCHAR), 'urn:uuid:', '') AS patient_id,
+        REPLACE(CAST(entry.resource.encounter.reference AS VARCHAR), 'urn:uuid:', '') AS encounter_id,
+        REPLACE(CAST(entry.resource.requester.reference AS VARCHAR), 'urn:uuid:', '') AS provider_id,
+        CAST(entry.resource.status AS VARCHAR) AS medication_request_status,
+        CAST(entry.resource.intent AS VARCHAR) AS medication_request_intent,
+        CAST(entry.resource.authoredOn AS TIMESTAMP) AS authored_datetime,
+        CAST(entry.resource.medicationCodeableConcept.text AS VARCHAR) AS medication_text,
         UNNEST(CAST(entry.resource.medicationCodeableConcept.coding AS JSON[])) AS medication_value,
         UNNEST(CAST(entry.resource.dosageInstruction AS JSON[])) AS dosage
-
     FROM unnested_entries
-    WHERE entry.resource.resourceType = 'MedicationRequest'
+    WHERE CAST(entry.resource.resourceType AS VARCHAR) = '"MedicationRequest"'
 ),
 
 immunizations AS (
     SELECT
-        entry.resource.id AS medication_request_id,
-        REPLACE(entry.resource.patient.reference, 'urn:uuid:', '') AS patient_id,
-        REPLACE(entry.resource.encounter.reference, 'urn:uuid:', '') AS encounter_id,
+        CAST(entry.resource.id AS VARCHAR) AS medication_request_id,
+        REPLACE(CAST(entry.resource.patient.reference AS VARCHAR), 'urn:uuid:', '') AS patient_id,
+        REPLACE(CAST(entry.resource.encounter.reference AS VARCHAR), 'urn:uuid:', '') AS encounter_id,
         CAST(NULL AS VARCHAR) AS provider_id,
-
-        entry.resource.status AS medication_request_status,
+        CAST(entry.resource.status AS VARCHAR) AS medication_request_status,
         CAST(NULL AS VARCHAR) AS medication_request_intent,
-        entry.resource.occurrenceDateTime AS authored_datetime,
-        entry.resource.vaccineCode.text AS medication_text,
-
+        CAST(entry.resource.occurrenceDateTime AS TIMESTAMP) AS authored_datetime,
+        CAST(entry.resource.vaccineCode.text AS VARCHAR) AS medication_text,
         UNNEST(CAST(entry.resource.vaccineCode.coding AS JSON[])) AS medication_value,
         CAST(NULL AS JSON) AS dosage
-
     FROM unnested_entries
-    WHERE entry.resource.resourceType = 'Immunization'
+    WHERE CAST(entry.resource.resourceType AS VARCHAR) = '"Immunization"'
 ),
 
 combined_sources AS (
@@ -50,15 +49,15 @@ combined_sources AS (
 
 SELECT
     medication_request_id,
-    CAST(patient_id AS UUID) AS patient_id,
-    CAST(encounter_id AS UUID) AS encounter_id,
-    CAST(provider_id AS UUID) AS practitioner_id,
+    patient_id,
+    encounter_id,
+    provider_id AS practitioner_id,
     medication_request_status,
     medication_request_intent,
     authored_datetime,
     medication_text,
-    medication_value ->> 'code' AS medication_code,
-    medication_value ->> 'display' AS medication_display,
-    dosage ->> 'sequence' AS dosage_sequence,
-    dosage ->> 'asNeededBoolean' AS as_needed
+    CAST(medication_value ->> 'code' AS VARCHAR) AS medication_code,
+    CAST(medication_value ->> 'display' AS VARCHAR) AS medication_display,
+    CAST(dosage ->> 'sequence' AS VARCHAR) AS dosage_sequence,
+    CAST(dosage ->> 'asNeededBoolean' AS VARCHAR) AS as_needed
 FROM combined_sources
