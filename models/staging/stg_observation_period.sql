@@ -29,7 +29,7 @@ aggregated_periods AS (
 )
 
 SELECT
-    patient_id,
+    REPLACE(patient_id, '"', '') AS patient_id,
     first_clinical_date,
     last_clinical_date
 FROM aggregated_periods

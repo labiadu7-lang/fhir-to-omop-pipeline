@@ -25,7 +25,7 @@ device_info AS (
 
 SELECT
     device_id,
-    patient_id,
+    REPLACE(patient_id, '"', '') AS patient_id,
     device_status,
     manufacture_datetime,
     expiration_datetime,

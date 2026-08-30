@@ -24,7 +24,7 @@ occurrence_stuff AS (
 
 SELECT
     condition_id,
-    patient_id,
+    REPLACE(patient_id, '"', '') AS patient_id,
     encounter_id,
     condition_start_time,
     CAST(condition_value ->> 'code' AS VARCHAR) AS condition_code,

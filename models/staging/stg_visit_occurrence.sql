@@ -33,7 +33,7 @@ second_unnest AS (
 SELECT
     v.encounter_id,
     REPLACE(v.patient_id, '"', '') AS patient_id,
-    v.provider_id,
+    REPLACE(v.provider_id, '"', '') AS provider_id,
     v.care_site_id,
     v.encounter_start_datetime,
     v.encounter_end_datetime,

@@ -41,7 +41,7 @@ combined_procedures AS (
 
 SELECT
     CAST(procedure_id AS VARCHAR) AS procedure_id,
-    CAST(patient_id AS VARCHAR) AS patient_id,
+    REPLACE(CAST(patient_id AS VARCHAR),  '"', '') AS patient_id,
     CAST(encounter_id AS VARCHAR) AS encounter_id,
     procedure_start_date,
     procedure_end_date,

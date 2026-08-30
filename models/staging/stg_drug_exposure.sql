@@ -49,7 +49,7 @@ combined_sources AS (
 
 SELECT
     medication_request_id,
-    patient_id,
+    REPLACE(patient_id, '"', '') AS patient_id,
     encounter_id,
     provider_id AS practitioner_id,
     medication_request_status,
