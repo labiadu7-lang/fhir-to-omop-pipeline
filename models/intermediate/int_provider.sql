@@ -11,7 +11,7 @@ SELECT
     CAST(NULL AS INTEGER) AS care_site_id,
     CAST(NULL AS INTEGER) AS year_of_birth,
     CAST(0 AS INTEGER) AS gender_concept_id,
-    CAST(provider_source_value AS VARCHAR(50)) AS provider_source_value,
+    CAST(provider_id AS VARCHAR(50)) AS provider_source_value,
     CAST(NULL AS VARCHAR(50)) AS specialty_source_value,
     CAST(0 AS INTEGER) AS specialty_source_concept_id,
     CAST(gender_source_value AS VARCHAR(50)) AS gender_source_value,

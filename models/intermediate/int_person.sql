@@ -3,9 +3,9 @@ SELECT
 
     CAST(NULL AS INTEGER) AS gender_concept_id,
 
-    CAST(EXTRACT(YEAR FROM birth_date) AS INTEGER) AS year_of_birth,
-    CAST(EXTRACT(MONTH FROM birth_date) AS INTEGER) AS month_of_birth,
-    CAST(EXTRACT(DAY FROM birth_date) AS INTEGER) AS day_of_birth,
+    CAST(EXTRACT(YEAR FROM CAST(birth_date AS DATE)) AS INTEGER) AS year_of_birth,
+    CAST(EXTRACT(MONTH FROM CAST(birth_date AS DATE)) AS INTEGER) AS month_of_birth,
+    CAST(EXTRACT(DAY FROM CAST(birth_date AS DATE)) AS INTEGER) AS day_of_birth,
     CAST(birth_date AS TIMESTAMP) AS birth_datetime,
 
     CAST(NULL AS INTEGER) AS race_concept_id,
