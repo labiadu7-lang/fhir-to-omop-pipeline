@@ -33,7 +33,7 @@ models:
   fhir_to_omop:
     # Config indicated by + and applies to all files under models/example/
     staging:
-      +materialized: table
+      +materialized: view
       +schema: staging
 
     intermediate:
@@ -45,6 +45,6 @@ models:
       +schema: omop
 
     concepts:
-        +materialized: table
+        +materialized: view
         +schema: concepts
 
