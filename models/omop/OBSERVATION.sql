@@ -12,7 +12,7 @@ SELECT DISTINCT
     COALESCE(u.concept_id, 0) AS unit_concept_id,
     pro.provider_id,
     v.visit_occurrence_id,
-    visit_detail_id,
+    vi.visit_detail_id,
     observation_source_value,
     COALESCE(c.concept_id, 0) AS observation_source_concept_id,
     unit_source_value,
@@ -27,15 +27,17 @@ LEFT JOIN {{ ref("int_visit_occurrence")}} v
     ON o.encounter_id = v.encounter_id
 LEFT JOIN {{ ref("int_provider")}} pro
     ON v.provider_id = pro.practitioner_id
-LEFT JOIN {{ ref('concept_table') }} c
+LEFT JOIN {{ ref("int_visit_detail")}} vi
+    ON o.visit_detail_id = vi.visit_detail_id
+LEFT JOIN {{ ref('CONCEPT') }} c
     ON o.observation_source_value = c.concept_code
     AND c.vocabulary_id IN ('LOINC', 'SNOMED')
     AND c.standard_concept = 'S'
-LEFT JOIN {{ ref('concept_table') }} AS co
+LEFT JOIN {{ ref('CONCEPT') }} AS co
     ON co.concept_name = 'EHR'
     AND co.domain_id = 'Type Concept'
     AND co.standard_concept = 'S'
-LEFT JOIN {{ ref('concept_table') }} AS u
+LEFT JOIN {{ ref('CONCEPT') }} AS u
     ON o.unit_source_value = u.concept_code
     AND u.vocabulary_id = 'UCUM'
 ORDER BY observation_id

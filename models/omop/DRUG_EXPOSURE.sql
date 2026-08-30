@@ -17,7 +17,7 @@ SELECT DISTINCT
     lot_number,
     pro.provider_id,
     v.visit_occurrence_id,
-    visit_detail_id,
+    vi.visit_detail_id,
     drug_source_value,
     COALESCE(co.concept_id, 0) AS drug_source_concept_id,
     route_source_value,
@@ -25,11 +25,13 @@ SELECT DISTINCT
 FROM {{ ref("int_drug_exposure")}} d
 LEFT JOIN {{ ref("int_person")}} p
     ON d.patient_id = p.person_source_value
-LEFT JOIN {{ ref('concept_table') }} co
+LEFT JOIN {{ ref("int_visit_detail")}} vi
+    ON d.visit_detail_id = vi.visit_detail_id
+LEFT JOIN {{ ref('CONCEPT') }} co
     ON d.drug_source_value = co.concept_code
     AND co.vocabulary_id IN ('RxNorm', 'CVX', 'SNOMED')
     AND co.standard_concept = 'S'
-LEFT JOIN {{ ref('concept_table') }} con
+LEFT JOIN {{ ref('CONCEPT') }} con
     ON con.concept_name = 'EHR prescription'
     AND con.domain_id = 'Type Concept'
     AND con.standard_concept = 'S'

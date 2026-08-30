@@ -5,7 +5,7 @@ SELECT
     city,
     state,
     zip,
-    country,
+    county,
     location_source_value,
     country_concept_id,
     country_source_value,

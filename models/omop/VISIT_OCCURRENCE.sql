@@ -9,7 +9,7 @@ WITH mapped_visits AS (
         END AS mapped_concept_code
     FROM {{ ref('int_visit_occurrence') }} v
 )
-SELECT
+SELECT DISTINCT
     mv.visit_occurrence_id,
     p.person_id,
     COALESCE(co.concept_id, 0) AS visit_concept_id,
@@ -34,16 +34,16 @@ LEFT JOIN {{ ref("int_provider")}} pro
     ON mv.provider_id = pro.practitioner_id
 LEFT JOIN {{ ref("int_care_site")}} ca
     ON mv.care_site_id = ca.organization_id
-LEFT JOIN {{ ref('concept_table') }} c
+LEFT JOIN {{ ref('CONCEPT') }} c
     ON mv.visit_source_value = c.concept_code
     AND c.vocabulary_id = 'Visit'
     AND c.standard_concept = 'S'
-LEFT JOIN {{ ref('concept_table') }} co
+LEFT JOIN {{ ref('CONCEPT') }} co
     ON mv.mapped_concept_code = co.concept_code
     AND co.vocabulary_id = 'Visit'
     AND co.standard_concept = 'S'
     AND co.invalid_reason IS NULL
-LEFT JOIN {{ ref('concept_table') }} AS con
+LEFT JOIN {{ ref('CONCEPT') }} AS con
     ON con.concept_name = 'EHR encounter record'
     AND con.domain_id = 'Type Concept'
     AND con.standard_concept = 'S'

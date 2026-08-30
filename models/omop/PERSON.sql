@@ -2,7 +2,7 @@ WITH gender_concepts AS (
 SELECT
     concept_id,
     concept_name
-FROM {{ ref("concept_table") }}
+FROM {{ ref("CONCEPT") }}
 WHERE domain_id = 'Gender' AND standard_concept = 'S'
 ),
 
@@ -10,7 +10,7 @@ race_concepts AS (
 SELECT
     concept_id,
     concept_name
-FROM {{ ref("concept_table") }}
+FROM {{ ref("CONCEPT") }}
 WHERE domain_id = 'Race' AND standard_concept = 'S'
 ),
 
@@ -18,7 +18,7 @@ ethnicity_concepts AS (
 SELECT
     concept_id,
     concept_name
-FROM {{ ref("concept_table")}}
+FROM {{ ref("CONCEPT")}}
 WHERE domain_id = 'Ethnicity' AND standard_concept = 'S'
     )
 
