@@ -1,7 +1,6 @@
-
 WITH raw_data AS (
     SELECT * FROM read_csv(
-        'C:/Users/labia/Desktop/concepts/CONCEPT_RELATIONSHIP.csv', 
+        'data/concepts/CONCEPT_RELATIONSHIP.csv',
         delim = '\t', 
         header = true,
         auto_detect = false,

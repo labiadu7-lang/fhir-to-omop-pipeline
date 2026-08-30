@@ -1,1 +1,1 @@
-SELECT * FROM read_csv_auto('C:/Users/labia/Desktop/concepts/DOMAIN.csv', delim='\t')
+SELECT * FROM read_csv_auto('data/concepts/DOMAIN.csv', delim='\t', header=true)

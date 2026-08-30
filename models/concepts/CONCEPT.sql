@@ -1,14 +1,13 @@
-
 WITH raw_concept AS (
     SELECT * FROM read_csv_auto(
-        'C:/Users/labia/Desktop/concepts/CONCEPT.csv', 
-        delim = '\t', 
+        'data/concepts/CONCEPT.csv',
+        delim = '\t',
         header = true
     )
 ),
 raw_cvx AS (
     SELECT * FROM read_csv_auto(
-        'C:/Users/labia/Desktop/concepts/CONCEPT_cvx.csv', 
+        'data/concepts/CONCEPT_cvx.csv',
         delim = '\t', 
         header = true
     )
