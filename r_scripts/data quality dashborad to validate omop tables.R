@@ -4,7 +4,7 @@ library(shiny)
 
 connectionDetails <- DatabaseConnector::createConnectionDetails(
   dbms = "duckdb",
-  server = "C:/Users/labia/PycharmProjects/fhir_to_omop/dev.duckdb"
+  server = "path/to/your/dev.duckdb"
 )
 
 DataQualityDashboard::executeDqChecks(
