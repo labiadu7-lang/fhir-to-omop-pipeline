@@ -7,8 +7,7 @@ logs/
 *.db
 *.db-journal
 
-data/fhir_raw/*.json
-data/parquet/
+*.json
 *.parquet
 *.csv
 *.duckdb
