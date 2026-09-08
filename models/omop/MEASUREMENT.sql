@@ -33,7 +33,7 @@ LEFT JOIN {{ ref("int_visit_detail")}} vi
     ON m.visit_detail_id = vi.visit_detail_id
 LEFT JOIN {{ ref('CONCEPT') }} c
     ON m.measurement_source_value = c.concept_code
-    AND c.vocabulary_id = 'LOINC'
+    AND c.vocabulary_id IN ('LOINC', 'SNOMED')
     AND c.standard_concept = 'S'
 LEFT JOIN {{ ref('CONCEPT') }} AS co
     ON co.concept_name = 'EHR'
@@ -42,7 +42,6 @@ LEFT JOIN {{ ref('CONCEPT') }} AS co
 LEFT JOIN {{ ref('CONCEPT') }} AS u
     ON m.unit_source_value = u.concept_code
     AND u.vocabulary_id = 'UCUM'
+WHERE c.domain_id = 'Measurement'
+   OR c.concept_id IS NULL
 ORDER BY measurement_id
-
-
-

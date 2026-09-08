@@ -21,22 +21,8 @@ procedure_stuff AS (
     WHERE entry.resource.resourceType = '"Procedure"'
 ),
 
-immunization_stuff AS (
-    SELECT
-        entry.resource.id AS procedure_id,
-        REPLACE(entry.resource.patient.reference, 'urn:uuid:', '') AS patient_id,
-        REPLACE(entry.resource.encounter.reference, 'urn:uuid:', '') AS encounter_id,
-        entry.resource.occurrenceDateTime AS procedure_start_date,
-        entry.resource.occurrenceDateTime AS procedure_end_date,
-        UNNEST(CAST(entry.resource.vaccineCode.coding AS JSON[])) AS procedure_values
-    FROM unnested_entries
-    WHERE entry.resource.resourceType = '"Immunization"'
-),
-
 combined_procedures AS (
     SELECT * FROM procedure_stuff
-    UNION ALL
-    SELECT * FROM immunization_stuff
 )
 
 SELECT

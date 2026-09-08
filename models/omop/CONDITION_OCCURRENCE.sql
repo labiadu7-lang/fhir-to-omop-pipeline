@@ -28,13 +28,10 @@ LEFT JOIN {{ ref('CONCEPT') }} AS co
     ON c.condition_source_value = co.concept_code
     AND co.vocabulary_id = 'SNOMED'
     AND co.standard_concept = 'S'
-
 LEFT JOIN {{ ref('CONCEPT') }} AS con
     ON con.concept_name = 'EHR encounter record'
     AND con.domain_id = 'Type Concept'
     AND con.standard_concept = 'S'
+WHERE co.domain_id = 'Condition'
+   OR co.concept_id IS NULL
 ORDER BY condition_occurrence_id
-
-
-
-

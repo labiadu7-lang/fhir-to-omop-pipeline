@@ -27,9 +27,11 @@ LEFT JOIN {{ ref("int_visit_detail")}} vi
 LEFT JOIN {{ ref('CONCEPT') }} AS co
     ON p.procedure_source_value = co.concept_code
    AND co.vocabulary_id IN ('CVX', 'SNOMED')
-    AND co.standard_concept = 'S'
+   AND co.standard_concept = 'S'
 LEFT JOIN {{ ref('CONCEPT') }} AS con
     ON con.concept_name = 'EHR encounter record'
     AND con.domain_id = 'Type Concept'
     AND con.standard_concept = 'S'
+WHERE co.domain_id = 'Procedure'
+   OR co.concept_id IS NULL
 ORDER BY procedure_occurrence_id

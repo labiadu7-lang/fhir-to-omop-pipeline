@@ -17,7 +17,7 @@ combined AS (
     UNION ALL
     SELECT * FROM raw_cvx
 )
-SELECT 
+SELECT
     CAST(concept_id AS INTEGER) AS concept_id,
     CAST(concept_name AS VARCHAR) AS concept_name,
     CAST(domain_id AS VARCHAR) AS domain_id,
