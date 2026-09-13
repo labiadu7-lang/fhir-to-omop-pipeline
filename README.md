@@ -1,28 +1,32 @@
-# FHIR R4 to OMOP CDM
+
 
 This project mapped FHIR R4 data to the OMOP Common Data Model (CDM).
 
 The source FHIR dataset contained 1,180 synthetic patients. Python, PyArrow, and DuckDB were used to convert the nested FHIR JSON data into Parquet format and expose it through a DuckDB raw data layer. dbt was then used to transform the data through staging models, intermediate models, and finally the OMOP CDM tables.
 
-dbt tests were used to check uniqueness, null constraints, and relationships between primary and foreign keys. Transformations used SQL-based relational modeling across OMOP clinical domains. FHIR resources were processed according to their semantic relationships. Patient, visit, concept, and clinical-event relationships were maintained throughout the transformation using relational techniques and multi-table joins to establish the required grain where the source FHIR data did not explicitly provide those relationships.
+dbt tests were used to check uniqueness, null constraints, and relationships between primary and foreign keys. Transformations used SQL-based relational modeling across OMOP clinical domains. FHIR resources were processed according to their relationships. Patient, visit, concept, and clinical-event relationships were maintained throughout the transformation using multi-table joins to establish the required grain where the source FHIR data did not explicitly provide those relationships.
 
 Source clinical codes were mapped to standard OMOP concepts using the required OHDSI vocabulary tables.
 
 The resulting CDM was evaluated using the OHDSI Data Quality Dashboard (DQD). The CDM achieved 100% structural validation and approximately 98% across the evaluated completeness, plausibility, and conformance checks. The pipeline also completed with zero SQL execution errors.
 
-The pipeline is script-based and can be rerun from the source FHIR dataset to regenerate the OMOP database. The project is designed to run locally using Python, DuckDB, SQL, and dbt.
+The pipeline is script-based and can be rerun from the source synthea FHIR dataset to regenerate the OMOP database. The project is designed to run locally using Python, DuckDB, SQL, and dbt.
 
 SQL transformation models are provided in the `models/` directory, with dbt tests defined in the corresponding `schema.yml` files under `models/omop/`.
 
-## Building and Validating the CDM
+
 
 ### 1. Clone the repository
 
-Clone the repository to your local machine.
+Clone the repository to your local machine. In your local ide terminal, run
 ```bash
 git clone https://github.com/labiadu7-lang/fhir-to-omop-pipeline.git fhir_to_omop
+```
+then 
+```bash
 cd fhir_to_omop
 ```
+to initialize the environment
 
 ### 2. Install Python dependencies
 
@@ -36,8 +40,6 @@ pip install -r requirements.txt
 
 Download the synthetic patient 1K FHIR R4 dataset from [Synthea Downloads](https://synthea.mitre.org/downloads).
 
-### 4. Place the FHIR data in the project
-
 Extract the FHIR JSON files into:
 
 ```text
@@ -46,7 +48,7 @@ data/fhir_raw/
 
 in the project root.
 
-### 5. Download the required OMOP vocabularies
+### 4. Download the required OMOP vocabularies
 
 Go to [OHDSI Athena](https://athena.ohdsi.org/) and create an account.
 
@@ -56,8 +58,6 @@ Navigate to **Downloads** and select the following vocabularies:
 
 Request access to the selected vocabularies and download them.
 
-### 6. Place the vocabulary files in the project
-
 Extract the downloaded vocabulary files into:
 
 ```text
@@ -66,9 +66,7 @@ data/concepts/
 
 These vocabularies provide the standard OMOP concepts required to map source clinical codes for drugs, conditions, procedures, measurements, and other clinical data.
 
-> **External data dependency:** The FHIR dataset and OHDSI vocabulary files are not included in the repository because of their size and distribution requirements. The pipeline is therefore reproducible with these external data dependencies.
-
-### 7. Create the raw Parquet layer
+### 5. Create the raw Parquet layer
 
 From the project root, run:
 
@@ -78,7 +76,7 @@ python parquet_raw_maker.py
 
 This converts the FHIR JSON files into Parquet and configures the resulting Parquet data as the raw layer within DuckDB.
 
-### 8. Build the OMOP CDM
+### 6. Build the OMOP CDM
 
 Run:
 
@@ -88,9 +86,9 @@ dbt build --profiles-dir "."
 
 This builds the dbt models and runs the configured dbt tests.
 
-### 9. Inspect the resulting database
+### 7. Inspect the resulting database
 
-Connect the generated `dev.duckdb` file to a database management tool such as DBeaver.
+Connect the generated `dev.duckdb` file to a database tool such as DBeaver.
 
 The resulting OMOP tables can be found in the:
 
@@ -100,33 +98,43 @@ main_omop
 
 schema.
 
-### 10. Run the OHDSI data-quality validation
+### 8. Run the OHDSI data-quality validation
 
-The validation scripts are located in:
+The validation script is located in:
 
 ```text
 r_scripts/
 ```
 
-Run the appropriate R scripts using RStudio or another R environment.
+Run the appropriate R script using RStudio or another R environment.
 
-### 11. Configure the database path
+### 9. Configure the database path
 
 Before running the validation scripts, change:
 
 ```text
-"path/to/your/dev.duckdb"
+server =  "path/to/your/dev.duckdb" 
+```
+and 
+```text
+setwd("path/to/your/project/root")
 ```
 
-to the local path of your generated `dev.duckdb` database.
+to the local path of your generated `dev.duckdb` database and your `local project root`.
 
-### 12. Install R dependencies
+### 10. Install R dependencies
 
-Install the required R packages and libraries when prompted by the validation scripts.
+Install the required R packages in your R environment console
+```text
+install.packages("DataQualityDashboard")
+install.packages("Shiny")
+install.packages("duckdb")
+```
+or follow the installation prompt in the file if available.
 
-### 13. Configure Java
+### 11. Configure Java
 
-The OHDSI validation workflow requires a 64-bit Java Development Kit (JDK).
+The OHDSI validation dashboard requires a 64-bit Java Development Kit (JDK).
 
 #### Windows
 
@@ -144,13 +152,19 @@ Set the Variable value to the directory where the Eclipse Adoptium JDK was insta
 
 6. Click **OK**.
 
-Restart R/RStudio and any open command prompts so that the new environment variable is recognized.
+Restart R/RStudio so that the new environment variable is recognized.
 
 
-### 14. Run the validation scripts
+### 12. Run the validation scripts
 
 Run the R scripts in `r_scripts/`. The validation results can then be viewed through the resulting Shiny interactive browser interface.
 
 ## Reproducibility
-The Java configuration steps are environment-specific. The validation workflow was tested on Windows. 
+The Java configuration steps are environment-specific. The validation workflow was tested on Windows.
+
+## Limitations
+This project was based on synthetic FHIR R4 data from synthea. The code therfore is modelled on that data structure. It is not guaranteed that, it will work on other implementations of FHIR R4 without modifications.
+Also, The project did not map all the OMOP CDM tables as can be seen in the tables to exclude portion of the r script. Rather, it focused on the core principal tables in the model.
+
+
 
