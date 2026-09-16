@@ -2,11 +2,11 @@ Sys.getenv("JAVA_HOME")
 library(DataQualityDashboard)
 library(shiny)
 
-setwd("C:/Users/labia/PycharmProjects/fhir_to_omop")
+setwd("path/to/your/project/root")
 
 connectionDetails <- DatabaseConnector::createConnectionDetails(
   dbms = "duckdb",
-  server = "C:/Users/labia/PycharmProjects/fhir_to_omop/dev.duckdb"
+  server =  "path/to/your/dev.duckdb"
 )
 
 DataQualityDashboard::executeDqChecks(
