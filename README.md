@@ -8,8 +8,9 @@ dbt tests were used to check uniqueness, null constraints, and relationships bet
 
 Source clinical codes were mapped to standard OMOP concepts using the required OHDSI vocabulary tables.
 
-The resulting CDM was evaluated using the OHDSI Data Quality Dashboard (DQD). The CDM achieved 100% structural validation and approximately 98% across the evaluated completeness, plausibility, and conformance checks. The pipeline also completed with zero SQL execution errors.
-<img alt="DQD Dashboard Results" src="C:\Users\labia\Pictures\Screenshots\z dqd 1.png"/>
+The resulting CDM was evaluated using the OHDSI Data Quality Dashboard (DQD). The CDM achieved 100% structural validation and approximately 99% across the evaluated completeness, plausibility, and conformance checks. The pipeline also completed with zero SQL execution errors.
+<img width="1114" height="653" alt="for git hub" src="https://github.com/user-attachments/assets/35496395-976b-413b-b584-c428d9e52753" />
+
 The pipeline is script-based and can be rerun from the source synthea FHIR dataset to regenerate the OMOP database. The project is designed to run locally using Python, DuckDB, SQL, and dbt.
 
 SQL transformation models are provided in the `models/` directory, with dbt tests defined in the corresponding `schema.yml` files under `models/omop/`.
