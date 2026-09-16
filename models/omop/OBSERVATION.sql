@@ -9,7 +9,7 @@ SELECT DISTINCT
     value_as_string,
     value_as_concept_id,
     qualifier_concept_id,
-    COALESCE(u.concept_id, 0) AS unit_concept_id,
+    COALESCE(u.concept_id, NULL) AS unit_concept_id,
     pro.provider_id,
     v.visit_occurrence_id,
     vi.visit_detail_id,

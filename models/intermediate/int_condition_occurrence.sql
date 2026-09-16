@@ -16,7 +16,7 @@ SELECT
 
 
     CAST(0 AS INTEGER) AS condition_type_concept_id,
-    CAST(0 AS INTEGER) AS condition_status_concept_id,
+    CAST(32902 AS INTEGER) AS condition_status_concept_id,
 
     CAST(NULL AS VARCHAR(20)) AS stop_reason,
     CAST(NULL AS INTEGER) AS provider_id,

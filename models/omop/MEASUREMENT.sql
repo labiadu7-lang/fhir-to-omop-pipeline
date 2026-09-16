@@ -10,7 +10,7 @@ SELECT DISTINCT
     operator_concept_id,
     value_as_number,
     value_as_concept_id,
-    COALESCE(u.concept_id, 0) AS unit_concept_id,
+    COALESCE(u.concept_id, NULL) AS unit_concept_id,
     range_low,
     range_high,
     pro.provider_id,

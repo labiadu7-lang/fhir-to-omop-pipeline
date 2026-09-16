@@ -17,7 +17,7 @@ SELECT
     CAST(NULL AS INTEGER) AS visit_detail_id,
     CAST(device_code AS VARCHAR(50)) AS device_source_value,
     CAST(0 AS INTEGER) AS device_source_concept_id,
-    CAST(0 AS INTEGER) AS unit_concept_id,
+    CAST(NULL AS INTEGER) AS unit_concept_id,
     CAST(NULL AS VARCHAR(50)) AS unit_source_value,
     CAST(0 AS INTEGER) AS unit_source_concept_id
 FROM {{ ref('stg_device') }}

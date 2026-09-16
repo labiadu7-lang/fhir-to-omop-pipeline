@@ -45,6 +45,6 @@ models:
       +schema: omop
 
     concepts:
-        +materialized: view
+        +materialized: table
         +schema: concepts
 

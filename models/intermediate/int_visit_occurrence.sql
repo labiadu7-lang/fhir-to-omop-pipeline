@@ -13,9 +13,9 @@ SELECT
     care_site_id,
     CAST(visit_source_value AS VARCHAR(50)) AS visit_source_value,
     CAST(0 AS INTEGER) AS visit_source_concept_id,
-    CAST(0 AS INTEGER) AS admitted_from_concept_id,
+    CAST(NULL AS INTEGER) AS admitted_from_concept_id,
     CAST(NULL AS VARCHAR(50)) AS admitted_from_source_value,
-    CAST(0 AS INTEGER) AS discharged_to_concept_id,
+    CAST(NULL AS INTEGER) AS discharged_to_concept_id,
     CAST(NULL AS VARCHAR(50)) AS discharged_to_source_value,
     CAST(NULL AS INTEGER) AS preceding_visit_occurrence_id
 FROM {{ ref('stg_visit_occurrence') }}
